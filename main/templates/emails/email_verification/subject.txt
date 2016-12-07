@@ -1,0 +1,1 @@
+{% if just_joined %}Account activation{% else %}Please verify your email{% endif %}

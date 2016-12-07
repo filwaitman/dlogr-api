@@ -1,0 +1,7 @@
+Dear {{ customer.name }},
+
+A request for a new password was submitted for your dlogr account. Please click the following URL to reset your password: {{ url }}
+If clicking the URL above does not work, copy and paste the URL into a browser window.
+
+Warm regards,
+The Dlogr trained monkeys.

@@ -1,0 +1,11 @@
+Dear {{ customer.name }},
+
+{% if just_joined %}
+Thanks for joining Dlogr!
+    
+{% endif %}
+Please click the following URL to verify your email: {{ url }}
+If clicking the URL above does not work, copy and paste the URL into a browser window.
+
+Warm regards,
+The Dlogr trained monkeys.

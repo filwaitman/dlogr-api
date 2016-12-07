@@ -1,0 +1,33 @@
+# Django
+Django==1.10
+django-jsonfield==1.0.1
+django-environ==0.4.0
+
+# DRF
+djangorestframework==3.5.1
+django-extensions==1.7.4
+django-filter==0.15.3
+
+# Database
+psycopg2==2.6.2
+
+# Heroku
+gunicorn==19.6.0
+dj-database-url==0.4.1
+whitenoise==3.2.2
+
+# Heroku addons
+newrelic==2.72.1.53
+rollbar==0.13.8
+django-anymail[postmark]==0.5
+
+# Cache
+redis==2.10.5
+django-redis==4.5.0
+hiredis==0.2.0
+
+# Datetime utils
+pytz==2016.7
+
+# Utils
+six==1.10.0
