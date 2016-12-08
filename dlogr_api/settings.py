@@ -15,8 +15,8 @@ if DEBUG:
     SECRET_KEY = 'itsdebugwhocares'
 
 else:
-    ALLOWED_HOSTS = ['api.dlogr.com', ]
-    SECRET_KEY = env('DJANGO_SECRET_KEY')
+    ALLOWED_HOSTS = ['api.dlogr.com', ]  # pragma: no cover
+    SECRET_KEY = env('DJANGO_SECRET_KEY')  # pragma: no cover
 
 
 # Application definition
@@ -163,27 +163,7 @@ AUTH_USER_MODEL = 'main.Customer'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-REDIS_URL = env('REDIS_URL', default='redis://localhost:6379/')
 CACHE_DEFAULT_TIME_TO_LIVE_IN_SECONDS = env.int('CACHE_DEFAULT_TIME_TO_LIVE_IN_SECONDS', default=60 * 60 * 24)
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': REDIS_URL,
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'DB': 0,
-            'PARSER_CLASS': 'redis.connection.HiredisParser',
-            'PASSWORD': six.moves.urllib.parse.urlparse(REDIS_URL).password,
-            'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
-            'CONNECTION_POOL_CLASS_KWARGS': {
-                # Hobby redisToGo on heroku supports max. of 10 connections, 8 is safe limit
-                # given other monitoring clients may be connected.
-                'max_connections': env.int('REDIS_MAX_CONNECTIONS', default=8),
-                'timeout': 20,
-            }
-        }
-    }
-}
 CACHE_PREFIX = {
     'VERIFY_ACCOUNT': 'verify-account',
     'RESET_PASSWORD': 'reset-password',
@@ -220,3 +200,26 @@ if env.bool('POSTMARK_ENABLED', default=False):
 if env.bool('FORCE_HTTPS', default=False):
     SECURE_SSL_REDIRECT = True  # pragma: no cover
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # pragma: no cover
+
+
+if env.bool('CACHE_ENABLED', default=False):
+    _redis_url = env('REDIS_URL', default='redis://localhost:6379/')  # pragma: no cover
+    CACHES = {  # pragma: no cover
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': _redis_url,
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                'DB': 0,
+                'PARSER_CLASS': 'redis.connection.HiredisParser',
+                'PASSWORD': six.moves.urllib.parse.urlparse(_redis_url).password,
+                'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+                'CONNECTION_POOL_CLASS_KWARGS': {
+                    # Hobby redisToGo on heroku supports max. of 10 connections, 8 is safe limit
+                    # given other monitoring clients may be connected.
+                    'max_connections': env.int('REDIS_MAX_CONNECTIONS', default=8),
+                    'timeout': 20,
+                }
+            }
+        }
+    }
