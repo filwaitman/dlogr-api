@@ -1,6 +1,7 @@
 import six.moves.urllib.parse
 import os
 
+from corsheaders.defaults import default_headers
 import dj_database_url
 import environ
 
@@ -139,6 +140,8 @@ INSTALLED_APPS += [
     'rest_framework',
     'rest_framework.authtoken',
     'anymail',
+    'corsheaders',
+
 ] + INTERNAL_APPS
 
 REST_FRAMEWORK = {
@@ -179,6 +182,14 @@ EMAIL_SUBJECT_PREFIX = env("EMAIL_SUBJECT_PREFIX", default='[Dlogr]')
 EMAIL_PORT = env.int("EMAIL_PORT", default=587)
 EMAIL_USE_TLS = True
 SERVER_EMAIL = 'support@dlogr.com'
+
+# CORS
+MIDDLEWARE = MIDDLEWARE + [
+    'corsheaders.middleware.CorsMiddleware',
+]
+CORS_ORIGIN_WHITELIST = env.list('CORS_ORIGIN_WHITELIST', default=[])
+CORS_ALLOW_HEADERS = default_headers + ('X-BUNDLE-SECRET', )
+CORS_ORIGIN_ALLOW_ALL = env.bool('CORS_ORIGIN_ALLOW_ALL', default=False)
 
 if env.bool('ROLLBAR_ENABLED', default=False):
     MIDDLEWARE = MIDDLEWARE + [  # pragma: no cover

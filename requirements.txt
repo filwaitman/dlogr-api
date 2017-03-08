@@ -2,6 +2,7 @@
 Django==1.10
 django-jsonfield==1.0.1
 django-environ==0.4.0
+django-cors-headers==2.0.0
 
 # DRF
 djangorestframework==3.5.1
