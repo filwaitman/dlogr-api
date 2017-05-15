@@ -20,7 +20,7 @@ whitenoise==3.2.2
 # Heroku addons
 newrelic==2.72.1.53
 rollbar==0.13.8
-django-anymail[postmark]==0.5
+django-anymail[sparkpost]==0.9
 
 # Cache
 redis==2.10.5

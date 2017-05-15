@@ -208,6 +208,13 @@ if env.bool('POSTMARK_ENABLED', default=False):
         "POSTMARK_SERVER_TOKEN": env('POSTMARK_API_KEY'),
     }
 
+if env.bool('SPARKPOST_ENABLED', default=False):
+    EMAIL_BACKEND = "anymail.backends.sparkpost.EmailBackend"
+    # SPARKPOST_API_KEY = env('SPARKPOST_API_KEY')
+    ANYMAIL = {
+        "SPARKPOST_API_KEY": env('SPARKPOST_API_KEY'),
+    }
+
 if env.bool('FORCE_HTTPS', default=False):
     SECURE_SSL_REDIRECT = True  # pragma: no cover
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # pragma: no cover
